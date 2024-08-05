@@ -21,6 +21,10 @@ class User extends Model
         'address_id'
     ];
 
+    protected $hidden = [
+        'password'
+        ];
+
     public function restaurant()
     {
         return $this->belongsTo(Restaurant::class);
