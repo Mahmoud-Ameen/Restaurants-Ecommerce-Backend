@@ -19,6 +19,7 @@ Route::prefix('auth')->group(function () {
     // Must be an admin
     Route::middleware(['jwt_auth','jwt_check_admin'])->group(function () {
         Route::post('/createAdmin', [AuthController::class,'createAdmin']);
+        Route::post('/createRestaurantAdmin', [AuthController::class,'createRestaurantAdmin']);
     });
 
 });

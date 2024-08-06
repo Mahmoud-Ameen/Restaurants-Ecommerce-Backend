@@ -20,6 +20,17 @@
     -   `password`: User's password
     -   `role`: User's role (admin)
 
+### Register a New RestaurantAdmin (Admin Only) ✅
+
+-   **Endpoint**: `POST /api/auth/createRestaurantAdmin`
+-   **Description**: Register a new Restaurant Admin.
+-   **Request Body**:
+    -   `name`: User's name
+    -   `email`: User's email
+    -   `password`: User's password
+    -   `role`: User's role (RestaurantAdmin)
+    -   `restaurant_id`: Restaurant ID
+
 ### Login ✅
 
 -   **Endpoint**: `POST /api/auth/login`

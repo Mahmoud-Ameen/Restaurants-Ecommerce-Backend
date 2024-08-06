@@ -96,4 +96,28 @@ class AuthController extends Controller
 
         return response()->json(compact('user'));
     }
+
+    public function createRestaurantAdmin(Request $request){
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string',
+            'email' => 'required|string|email|unique:users',
+            'password' => 'required|string|min:6',
+            'role' => 'required|in:restaurantAdmin',
+            'restaurant_id' => 'required|exists:restaurants,id'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role' => 'restaurantAdmin',
+            'restaurant_id' => $request->restaurant_id
+        ]);
+
+        return response()->json(compact('user'));
+    }
 }
