@@ -1,0 +1,145 @@
+## Authentication
+
+### Register a New Customer ✅
+
+-   **Endpoint**: `POST /api/auth/register`
+-   **Description**: Register a new user.
+-   **Request Body**:
+    -   `name`: User's name
+    -   `email`: User's email
+    -   `password`: User's password
+    -   `role`: User's role (customer)
+
+### Register a New Admin (Admin Only) ✅
+
+-   **Endpoint**: `POST /api/auth/createAdmin`
+-   **Description**: Register a new Admin.
+-   **Request Body**:
+    -   `name`: User's name
+    -   `email`: User's email
+    -   `password`: User's password
+    -   `role`: User's role (admin)
+
+### Login ✅
+
+-   **Endpoint**: `POST /api/auth/login`
+-   **Description**: Login an existing user.
+-   **Request Body**:
+    -   `email`: User's email
+    -   `password`: User's password
+
+### Logout ✅
+
+-   **Endpoint**: `GET /api/auth/logout`
+-   **Description**: Logout the current user.
+
+## Restaurants
+
+### Get All Restaurants ✅
+
+-   **Endpoint**: `GET /api/restaurants`
+-   **Description**: Retrieve all restaurants.
+
+### Get a Single Restaurant by ID ✅
+
+-   **Endpoint**: `GET /api/restaurants/search`
+-   **Request Body**:
+    -   `id`: Restaurant ID
+-   **Description**: Retrieve a single restaurant by ID.
+
+### Search for Restaurants by name or within a radius from location ✅
+
+-   **Endpoint**: `GET /api/restaurants/search`
+-   **Request Body**:
+    -   `name`: Restaurant name (optional)
+    -   `address_id`: Foreign key referencing the addresses table (optional)
+    -   `range`: Search radius in kilometers (optional)
+-   **Description**: Search for restaurants by name or location.
+-   **Examples**:
+
+    -   Retrieve all restaurants withing range 10km from address 5:
+
+        `GET /api/restaurants/search`
+
+        ```json
+        {
+        	"address_id": "5",
+        	"range": "10"
+        }
+        ```
+
+        Response:
+
+        ```json
+        {
+        	"restaurants": [
+        		{
+        			"id": 5,
+        			"name": "Pizza Palace",
+        			"description": "Classic Italian pizza and pasta",
+        			"phone": "111-222-3333",
+        			"email": "pizzapalace@example.com",
+        			"address_id": 5,
+        			"created_at": "2024-08-06T00:53:17.000000Z",
+        			"updated_at": "2024-08-06T00:53:17.000000Z"
+        		},
+        		{
+        			"id": 6,
+        			"name": "Indian Spice",
+        			"description": "Traditional Indian cuisine",
+        			"phone": "444-555-6666",
+        			"email": "indianspice@example.com",
+        			"address_id": 6,
+        			"created_at": "2024-08-06T00:53:45.000000Z",
+        			"updated_at": "2024-08-06T00:53:45.000000Z"
+        		}
+        	]
+        }
+        ```
+
+    -   Search for restaurants by name within range 10km from address 5:
+
+        `GET /api/restaurants/search`
+
+        ```json
+        {
+        	"name": "pizza",
+        	"address_id": "5",
+        	"range": "10"
+        }
+        ```
+
+        Response:
+
+        ```json
+        {
+        	"restaurants": [
+        		{
+        			"id": 5,
+        			"name": "Pizza Palace",
+        			"description": "Classic Italian pizza and pasta",
+        			"phone": "111-222-3333",
+        			"email": "pizzapalace@example.com",
+        			"address_id": 5,
+        			"created_at": "2024-08-06T00:53:17.000000Z",
+        			"updated_at": "2024-08-06T00:53:17.000000Z"
+        		}
+        	]
+        }
+        ```
+
+### Create a New Restaurant (Admin Only) ✅
+
+-   **Endpoint**: `POST /api/restaurants`
+-   **Description**: Create a new restaurant.
+-   **Request Body**:
+    -   `name`: Restaurant's name
+    -   `description`: Restaurant's description
+    -   `phone`: Restaurant's phone number
+    -   `email`: Restaurant's email
+    -   `address.country`: Restaurant's address country
+    -   `address.city`: Restaurant's address city
+    -   `address.street`: Restaurant's address street
+    -   `address.latitude`: Restaurant's address latitude
+    -   `address.longitude`: Restaurant's address longitude
+-   **Authorization**: Admin role required.
