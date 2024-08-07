@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\RestaurantController;
+use App\Http\Controllers\MenuController;
 use Illuminate\Support\Facades\Route;
 
 //*----<< Authentication and User Endpoints >>----*//
@@ -11,13 +12,13 @@ Route::prefix('auth')->group(function () {
     Route::post('/register', [AuthController::class, 'register']);
 
     // Must be authenticated
-    Route::middleware('jwt_auth')->group(function () {
+    Route::middleware('JWTAuthenticate')->group(function () {
         Route::post('/logout', [AuthController::class, 'logout']);
         Route::get('/user', [AuthController::class,'user']);
     });
 
     // Must be an admin
-    Route::middleware(['jwt_auth','jwt_check_admin'])->group(function () {
+    Route::middleware(['JWTAuthenticate','JWTAuthorize.admin'])->group(function () {
         Route::post('/createAdmin', [AuthController::class,'createAdmin']);
         Route::post('/createRestaurantAdmin', [AuthController::class,'createRestaurantAdmin']);
     });
@@ -27,7 +28,28 @@ Route::prefix('auth')->group(function () {
 //*----<< Restaurants Endpoints >>----*//
 
 Route::prefix('restaurants')->group(function () {
-    Route::middleware(['jwt_auth','jwt_check_admin'])->post('/', [RestaurantController::class, 'store']); // create store
-    Route::get('/', [RestaurantController::class, 'index']); // get all restaurants
-    Route::get('/{id}', [RestaurantController::class, 'search']);
+    // create new restaurant
+    Route::middleware(['JWTAuthenticate','JWTAuthorize.admin'])->group(function () {
+        Route::post('/', [RestaurantController::class, 'store']);
+    });
+    // get all restaurants
+    Route::get('/', [RestaurantController::class, 'index']);
+
+    Route::get('/search', [RestaurantController::class, 'search']);
+});
+
+
+
+//*----<< Menus Endpoints >>----*//
+
+Route::prefix('menus')->group(function () {
+    Route::get('/', [MenuController::class, 'getMenus']);
+    Route::get('/{id}', [MenuController::class, 'getMenu']);
+    Route::middleware(['JWTAuthenticate','JWTAuthorize.restaurantAdmin'])->group(function () {
+        Route::post('/', [MenuController::class, 'createMenu']);
+        Route::put('/{id}', [MenuController::class, 'updateMenu']);
+    });
+    Route::middleware(['JWTAuthenticate','JWTAuthorize.adminOrRestaurantAdmin'])->group(function () {
+        Route::delete('/{id}', [MenuController::class, 'deleteMenu']);
+    });
 });

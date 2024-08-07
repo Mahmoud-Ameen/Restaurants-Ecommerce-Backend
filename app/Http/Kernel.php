@@ -58,7 +58,9 @@ class Kernel extends HttpKernel
         'signed' => \App\Http\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-        'jwt_auth' => \App\Http\Middleware\JWTAuthenticate::class,
-        'jwt_check_admin' => \App\Http\Middleware\JWTCheckAdmin::class,
+        'JWTAuthenticate' => \App\Http\Middleware\JWTAuthenticate::class,
+        'JWTAuthorize.admin' => \App\Http\Middleware\JWTAuthorize::class . ':admin',
+        'JWTAuthorize.restaurantAdmin' => \App\Http\Middleware\JWTAuthorize::class . ':restaurantAdmin',
+        'JWTAuthorize.adminOrRestaurantAdmin' => \App\Http\Middleware\JWTAuthorize::class . ':admin,restaurantAdmin',
     ];
 }

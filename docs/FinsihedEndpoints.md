@@ -154,3 +154,41 @@
     -   `address.latitude`: Restaurant's address latitude
     -   `address.longitude`: Restaurant's address longitude
 -   **Authorization**: Admin role required.
+
+## Menus
+
+### Get a Restaurant's Menus ✅
+
+-   **Endpoint**: `GET /api/menus/`
+-   **Request Body**:
+    -   `restaurant_id`: Foreign key referencing the restaurants table
+-   **Description**: Retrieve all menus of a restaurant.
+
+### Get a Single Menu by ID ✅
+
+-   **Endpoint**: `GET /api/menus/:id`
+-   **Description**: Retrieve a single menu by ID.
+
+### Create a New Menu (RestaurantAdmin Only) ✅
+
+-   **Endpoint**: `POST /api/menus`
+-   **Description**: Create a new menu.
+-   **Request Body**:
+    -   `restaurant_id`: Foreign key referencing the restaurants table
+-   **Authorization**: User with RestaurantAdmin role and restaurant_id = :restaurant_id required.
+
+### Update a Menu's name/description by ID (RestaurantAdmin Only) ✅
+
+-   **Endpoint**: `PUT /api/menus/:id`
+-   **Description**: Update a menu's details.
+-   **Request Body**:
+    -   `restaurant_id`: Foreign key referencing the restaurants table
+    -   `name`: Updated menu name (optional)
+    -   `description`: Updated menu description (optional)
+-   **Authorization**: User with RestaurantAdmin role and restaurant_id = :restaurant_id required.
+
+### Delete a Menu by ID (RestaurantAdmin and Admin Only) ✅
+
+-   **Endpoint**: `DELETE /api/menus/:id`
+-   **Description**: Delete a menu.
+-   **Authorization**: User with Admin role or RestaurantAdmin role and restaurant_id = :restaurant_id required.
