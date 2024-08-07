@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\MenuItemController;
 use App\Http\Controllers\RestaurantController;
 use App\Http\Controllers\MenuController;
 use Illuminate\Support\Facades\Route;
@@ -52,4 +53,16 @@ Route::prefix('menus')->group(function () {
     Route::middleware(['JWTAuthenticate','JWTAuthorize.adminOrRestaurantAdmin'])->group(function () {
         Route::delete('/{id}', [MenuController::class, 'deleteMenu']);
     });
+});
+
+
+//*----<< Menu Items Endpoints >>----*//
+Route::prefix('/menu-items')->group(function () {
+    Route::get('/', [MenuItemController::class, 'getMenuItems']); // get items of menu by (menu id)
+    Route::get('/{id}', [MenuItemController::class, 'getSingleMenuItem']); // get a single item
+    Route::middleware(['JWTAuthenticate','JWTAuthorize.restaurantAdmin'])->group(function () {
+        Route::post('/', [MenuItemController::class, 'createMenuItem'])->middleware(['JWTAuthenticate',"JWTAuthorize.restaurantAdmin"]);
+        Route::put('/{id}', [MenuItemController::class, 'updateMenuItem'])->middleware(['JWTAuthenticate',"JWTAuthorize.restaurantAdmin"]);
+    });
+    Route::delete('/{id}', [MenuItemController::class, 'deleteMenuItem'])->middleware(['JWTAuthenticate',"JWTAuthorize.adminOrRestaurantAdmin"]);
 });

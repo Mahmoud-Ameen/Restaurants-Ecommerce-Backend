@@ -192,3 +192,43 @@
 -   **Endpoint**: `DELETE /api/menus/:id`
 -   **Description**: Delete a menu.
 -   **Authorization**: User with Admin role or RestaurantAdmin role and restaurant_id = :restaurant_id required.
+
+## Menu Items
+
+### Get All Menu Items of a menu ✅
+
+-   **Endpoint**: `GET /api/menu-items`
+-   **Description**: Retrieve all menu items.
+
+### Get a Single Menu Item by ID ✅
+
+-   **Endpoint**: `GET /api/menu-items/:id`
+-   **Description**: Retrieve a single menu item by ID.
+
+### Create a New Menu Item (RestaurantAdmin Only) ✅
+
+-   **Endpoint**: `POST /api/menu-items`
+-   **Description**: Create a new menu item.
+-   **Request Body**:
+    -   `menu_id`: Foreign key referencing the menus table
+    -   `name`: Menu item name
+    -   `description`: Menu item description
+    -   `price`: Menu item price
+-   **Authorization**: RestaurantAdmin role required.
+
+### Update a Menu Item by ID (RestaurantAdmin Only) ✅
+
+-   **Endpoint**: `PUT /api/menu-items/:id`
+-   **Description**: Update a menu item's details.
+-   **Request Body**:
+    -   `menu_id`: Foreign key referencing the menus table
+    -   `name`: Menu item name
+    -   `description`: Menu item description
+    -   `price`: Menu item price
+-   **Authorization**: Admin role required.
+
+### Delete a Menu Item by ID (Admin and RestaurantAdmin Only) ✅
+
+-   **Endpoint**: `DELETE /api/menu-items/:id`
+-   **Description**: Delete a menu item.
+-   **Authorization**: RestaurantAdmin or Admin role required.
