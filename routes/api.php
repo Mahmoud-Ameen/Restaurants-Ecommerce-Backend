@@ -58,7 +58,7 @@ Route::prefix('menus')->group(function () {
 
 //*----<< Menu Items Endpoints >>----*//
 Route::prefix('/menu-items')->group(function () {
-    Route::get('/', [MenuItemController::class, 'getMenuItems']); // get items of menu by (menu id)
+    Route::get('/menu/{menu_id}', [MenuItemController::class, 'getMenuItems']); // get items of menu by (menu id)
     Route::get('/{id}', [MenuItemController::class, 'getSingleMenuItem']); // get a single item
     Route::middleware(['JWTAuthenticate','JWTAuthorize.restaurantAdmin'])->group(function () {
         Route::post('/', [MenuItemController::class, 'createMenuItem'])->middleware(['JWTAuthenticate',"JWTAuthorize.restaurantAdmin"]);

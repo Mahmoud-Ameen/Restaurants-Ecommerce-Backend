@@ -197,7 +197,7 @@
 
 ### Get All Menu Items of a menu ✅
 
--   **Endpoint**: `GET /api/menu-items`
+-   **Endpoint**: `GET /api/menu-items/menu/{menu_id}`
 -   **Description**: Retrieve all menu items.
 
 ### Get a Single Menu Item by ID ✅

@@ -9,10 +9,10 @@ use Illuminate\Support\Facades\Validator;
 
 class MenuItemController extends Controller
 {
-    public function getMenuItems(Request $request)
+    public function getMenuItems($menu_id)
     {
 
-        $validator = Validator::make($request->all(), [
+        $validator = Validator::make(["menu_id"=>$menu_id], [
             'menu_id' => 'required|integer|exists:menus,id',
         ]);
 
@@ -20,7 +20,7 @@ class MenuItemController extends Controller
             return response()->json(['error' => $validator->errors()], 400);
 
 
-        $menuItems = MenuItem::where('menu_id', $request['menu_id'])->get();
+        $menuItems = MenuItem::where('menu_id', $menu_id)->get();
         return response()->json($menuItems);
     }
 
