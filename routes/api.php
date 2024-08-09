@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\MenuItemController;
 use App\Http\Controllers\RestaurantController;
 use App\Http\Controllers\MenuController;
@@ -65,4 +66,13 @@ Route::prefix('/menu-items')->group(function () {
         Route::put('/{id}', [MenuItemController::class, 'updateMenuItem'])->middleware(['JWTAuthenticate',"JWTAuthorize.restaurantAdmin"]);
     });
     Route::delete('/{id}', [MenuItemController::class, 'deleteMenuItem'])->middleware(['JWTAuthenticate',"JWTAuthorize.adminOrRestaurantAdmin"]);
+});
+
+//*----<< Carts Endpoints >>----*//
+
+Route::prefix('/carts')->group(function () {
+    Route::middleware(['JWTAuthenticate','JWTAuthorize.customer'])->group(function () {
+        Route::get('/', [CartController::class, 'getCart']);
+        Route::put('/', [CartController::class, 'updateCartItem']);
+    });
 });

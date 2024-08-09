@@ -62,5 +62,6 @@ class Kernel extends HttpKernel
         'JWTAuthorize.admin' => \App\Http\Middleware\JWTAuthorize::class . ':admin',
         'JWTAuthorize.restaurantAdmin' => \App\Http\Middleware\JWTAuthorize::class . ':restaurantAdmin',
         'JWTAuthorize.adminOrRestaurantAdmin' => \App\Http\Middleware\JWTAuthorize::class . ':admin,restaurantAdmin',
+        'JWTAuthorize.customer' => \App\Http\Middleware\JWTAuthorize::class . ':customer',
     ];
 }

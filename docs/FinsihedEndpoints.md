@@ -232,3 +232,27 @@
 -   **Endpoint**: `DELETE /api/menu-items/:id`
 -   **Description**: Delete a menu item.
 -   **Authorization**: RestaurantAdmin or Admin role required.
+
+## Carts
+
+### Get a cart by customer_id and restaurant_id ✅
+
+-   **Endpoint**: `GET /api/carts`
+-   **Description**: Retrieve a cart by customer_id and restaurant_id
+-   **Request Body**:
+    -   `customer_id`: Foreign key referencing the users table
+    -   `restaurant_id`: Foreign key referencing the restaurants table
+-   **Authorization**: customer role required.
+-   **Response**: If the cart is found, all cart items will be returned.
+
+### Update cart item ✅
+
+-   **Endpoint**: `Put /api/carts`
+-   **Description**: If item is already in the cart, update the quantity. If item is not in the cart, add it.
+-   **Request Body**:
+    -   `customer_id`: Foreign key referencing the users table
+    -   `restaurant_id`: Foreign key referencing the restaurants table
+    -   `menu_item_id`: Foreign key referencing the menu items table
+    -   `quantity`: Quantity of the menu item
+    -   `item_price`: Price of the menu item
+-   **Authorization**: customer role required.
